@@ -1,4 +1,5 @@
 import os, sys
+import pefile
 
 
 def is_file_infected(filepath):
@@ -15,13 +16,17 @@ def is_file_infected(filepath):
 
 def cure_file(filepath):
 	buffer = open(filepath, 'rb').read()
-	buf_len = len(buffer)
-	str_len = buffer[-17:-1].split('.exe')[1][1:]
+	pe = pefile.PE(filepath)
+	str_len = buffer[-20:].split('.exe')[1][1:-1]
 	file_len = int(str_len)
-	file_buf = buffer[buf_len-file_len-18:-18]
+	sec_num = len(pe.sections)
+	last_sec = pe.sections[sec_num-1]
+	vir_offset = last_sec.PointerToRawData+last_sec.SizeOfRawData
+	file_buf = buffer[vir_offset:vir_offset+file_len]
 	with open(filepath, "wb")as f:
 		f.write(file_buf)
 		f.close()
+
 	print '\t %s is cured' %filepath
 	
 	
