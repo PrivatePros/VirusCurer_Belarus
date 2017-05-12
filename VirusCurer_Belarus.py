@@ -7,7 +7,7 @@ def is_file_infected(filepath):
 		buffer = open(filepath, 'rb').read()		
 		vir_maker = 'BELARUS-VIRUS-MAKER'
 		cannabis = '~c~a~n~n~a~b~i~s~~i~s~~n~o~t~~a~~d~r~u~g~'
-		if buffer[-11:-7]=='.exe':	
+		if '.exe' in buffer[-20:]:	
 			if vir_maker in buffer and cannabis in buffer:
 				return True
 	except:
