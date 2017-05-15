@@ -1,6 +1,7 @@
 import os, sys
 import pefile
 
+#http://www.freebuf.com/column/134713.html
 
 def is_file_infected(filepath):
 	try:
